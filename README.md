@@ -4,10 +4,14 @@
 [![Spring Boot 3.3.4](https://img.shields.io/badge/Spring%20Boot-3.3.4-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![REST Assured](https://img.shields.io/badge/REST%20Assured-5.4.0-blue.svg)](https://rest-assured.io/)
 [![JUnit 5](https://img.shields.io/badge/JUnit-5-red.svg)](https://junit.org/junit5/)
-[![Allure Report](https://img.shields.io/badge/Allure-2.27.0-purple.svg)](https://qameta.io/allure-report/)
-[![Build & Tests](https://img.shields.io/badge/Build-Passing-success.svg)]()
+[![Allure Report](https://img.shields.io/badge/Allure%20Report-Live%20Dashboard-purple.svg)](https://iamyoussef2005.github.io/qa-java-api/)
+[![Tests](https://img.shields.io/badge/Tests-48%20Passed-success.svg)](https://iamyoussef2005.github.io/qa-java-api/)
+[![CI/CD](https://img.shields.io/badge/GitHub%20Actions-Passing-brightgreen.svg)]()
 
 > A comprehensive QA Automation portfolio project showcasing practical API testing, automated regression suites, defect tracking, and modern test design patterns using **Java 21**, **Spring Boot 3**, **REST Assured**, **JUnit 5**, **AssertJ**, and **Postman**.
+
+👉 **[🌐 View Live Interactive Allure Test Report](https://iamyoussef2005.github.io/qa-java-api/)**  
+*(Click to open the live interactive dashboard: 48 automated test cases, execution timings, severity breakdowns, and HTTP request/response logs without cloning the repo).*
 
 ---
 
@@ -204,10 +208,14 @@ A fully functional Postman collection and environment are provided in the [`post
 
 ## 12. Test Reports
 
-### Allure Reporting Integration
+### Live Interactive Allure Dashboard
+The full interactive test report is published and hosted live via GitHub Pages on every build:  
+👉 **[https://iamyoussef2005.github.io/qa-java-api/](https://iamyoussef2005.github.io/qa-java-api/)**
+
+### Local Allure Report
 Allure Report is integrated directly via `allure-junit5` and `allure-rest-assured`.
 
-To generate and view the interactive HTML report:
+To generate and view the interactive HTML report locally:
 ```bash
 # Execute tests to generate allure-results
 mvn clean test

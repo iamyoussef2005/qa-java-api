@@ -1,4 +1,4 @@
-name: Automated QA API Test Suite
+name: Automated QA API Test Suite & Live Report
 
 on:
   push:
@@ -6,9 +6,14 @@ on:
   pull_request:
     branches: [ main, master ]
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   test:
-    name: Run Automated REST Assured & JUnit 5 Tests
+    name: Run Automated Tests & Publish Allure Report
     runs-on: ubuntu-latest
 
     steps:
@@ -22,11 +27,28 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Compile & Build Application
+      - name: Compile Application
         run: mvn compile --no-transfer-progress
 
       - name: Execute QA Automated Tests
         run: mvn test --no-transfer-progress
+
+      - name: Generate Allure Static HTML Report
+        if: always()
+        run: mvn allure:report --no-transfer-progress
+
+      - name: Add .nojekyll to Allure Report
+        if: always()
+        run: touch target/site/allure-maven-plugin/.nojekyll
+
+      - name: Deploy Allure Report to GitHub Pages
+        if: always() && github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: target/site/allure-maven-plugin
+          publish_branch: gh-pages
+          force_orphan: true
 
       - name: Upload Test Results (Surefire Reports)
         if: always()
@@ -36,7 +58,7 @@ jobs:
           path: target/surefire-reports/
           retention-days: 14
 
-      - name: Upload Allure Results
+      - name: Upload Allure Results Artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
