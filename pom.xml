@@ -12,10 +12,10 @@
     </parent>
     
     <groupId>com.portfolio.qa</groupId>
-    <artifactId>qa-java-api-portfolio</artifactId>
+    <artifactId>qa-java-api</artifactId>
     <version>1.0.0</version>
-    <name>qa-java-api-portfolio</name>
-    <description>Professional QA Automation Portfolio Project - User Management and Authentication REST API with REST Assured and JUnit 5</description>
+    <name>qa-java-api</name>
+    <description>QA Automation Project - User Management and Authentication REST API with REST Assured and JUnit 5</description>
     
     <properties>
         <java.version>21</java.version>

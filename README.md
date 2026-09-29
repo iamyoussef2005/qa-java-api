@@ -312,8 +312,8 @@ qa-java-api-project/
 ### Start the Application
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/qa-java-api-portfolio.git
-cd qa-java-api-portfolio
+git clone https://github.com/iamyoussef2005/qa-java-api.git
+cd qa-java-api
 
 # Start the Spring Boot server
 mvn spring-boot:run
