@@ -10,10 +10,10 @@ spring:
     username: sa
     password: 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
     show-sql: false
+    open-in-view: false
     properties:
       hibernate:
         format_sql: false
@@ -24,9 +24,9 @@ spring:
 
 app:
   jwt:
-    # 256-bit secret key for HMAC-SHA256
-    secret: "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970"
-    expiration-ms: 86400000 # 24 hours
+    # 256-bit secret key for HMAC-SHA256 (can be overridden via JWT_SECRET environment variable)
+    secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000} # 24 hours
 
 logging:
   level:

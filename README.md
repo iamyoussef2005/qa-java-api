@@ -7,15 +7,15 @@
 [![Allure Report](https://img.shields.io/badge/Allure-2.27.0-purple.svg)](https://qameta.io/allure-report/)
 [![Build & Tests](https://img.shields.io/badge/Build-Passing-success.svg)]()
 
-> A production-grade QA Automation portfolio project showcasing end-to-end API testing, automated regression suites, defect tracking, and modern test design patterns using **Java 21**, **Spring Boot 3**, **REST Assured**, **JUnit 5**, **AssertJ**, and **Postman**.
+> A comprehensive QA Automation portfolio project showcasing practical API testing, automated regression suites, defect tracking, and modern test design patterns using **Java 21**, **Spring Boot 3**, **REST Assured**, **JUnit 5**, **AssertJ**, and **Postman**.
 
 ---
 
 ## 1. Project Overview
 
-This repository demonstrates practical, industry-standard Quality Assurance Engineering for backend services. Rather than relying on mock tutorials or synthetic sandbox endpoints, this project implements:
-1. A robust **User Management & Authentication REST API** with Bean Validation, JPA/Hibernate persistence, and stateless JWT Bearer token security.
-2. A comprehensive **Automated API Testing Framework** written entirely in Java utilizing **JUnit 5 Jupiter**, **REST Assured**, and **AssertJ**.
+This repository demonstrates practical Quality Assurance Engineering principles for backend REST services. Rather than relying on mock tutorials or synthetic sandbox endpoints, this project implements:
+1. A dedicated **User Management & Authentication REST API** with Bean Validation, JPA/Hibernate persistence, and stateless JWT Bearer token security.
+2. A comprehensive **Automated API Testing Framework** written in Java utilizing **JUnit 5 Jupiter**, **REST Assured**, and **AssertJ**.
 3. A formal **QA Defect Lifecycle** (`docs/BUG_REPORTS.md`) demonstrating real-world defect discovery, root cause analysis, automated regression testing, and verification.
 4. An importable **Postman Collection & Environment** (`postman/`) with automated JavaScript pre-request and test assertion scripts.
 5. Continuous Integration via **GitHub Actions** (`.github/workflows/tests.yml`) executing test suites on every pull request and push.
