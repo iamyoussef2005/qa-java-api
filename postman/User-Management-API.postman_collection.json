@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "c1f7b8d0-5e3a-49a1-9a7f-1d8f3b2849e1",
 		"name": "User Management & Authentication API",
-		"description": "Comprehensive Postman test collection for User Management & Authentication REST API, including Positive, Negative, and Security test suites with assertions.",
+		"description": "Comprehensive Postman test collection for User Management & Authentication REST API, including Positive, Negative, and Security test suites with assertions and automated Newman CI runner support.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -12,6 +12,17 @@
 				{
 					"name": "Register User - Positive",
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const uniqueId = Date.now();",
+									"pm.environment.set(\"uniqueUserEmail\", \"postman_\" + uniqueId + \"@example.com\");",
+									"pm.environment.set(\"uniqueUsername\", \"postman_\" + uniqueId);"
+								],
+								"type": "text/javascript"
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
@@ -23,8 +34,8 @@
 									"pm.test(\"Response body contains valid user details\", function () {",
 									"    var jsonData = pm.response.json();",
 									"    pm.expect(jsonData.id).to.be.a('number');",
-									"    pm.expect(jsonData.username).to.eql(\"postman_user\");",
-									"    pm.expect(jsonData.email).to.eql(\"postman_user@example.com\");",
+									"    pm.expect(jsonData.username).to.eql(pm.environment.get(\"uniqueUsername\"));",
+									"    pm.expect(jsonData.email).to.eql(pm.environment.get(\"uniqueUserEmail\"));",
 									"    pm.expect(jsonData.role).to.eql(\"USER\");",
 									"    pm.expect(jsonData.createdAt).to.not.be.null;",
 									"    pm.expect(jsonData.password).to.be.undefined;",
@@ -45,7 +56,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"postman_user\",\n    \"email\": \"postman_user@example.com\",\n    \"password\": \"SecurePass123!\"\n}"
+							"raw": "{\n    \"username\": \"{{uniqueUsername}}\",\n    \"email\": \"{{uniqueUserEmail}}\",\n    \"password\": \"SecurePass123!\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/auth/register",
@@ -58,7 +69,7 @@
 								"register"
 							]
 						},
-						"description": "Registers a new user with valid username, email, and password. Verifies 201 Created and response data."
+						"description": "Registers a new user with dynamically generated credentials. Verifies 201 Created and saves user details."
 					},
 					"response": []
 				},
@@ -177,7 +188,7 @@
 									"pm.test(\"User ID matches requested ID\", function () {",
 									"    var jsonData = pm.response.json();",
 									"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"registeredUserId\"));",
-									"    pm.expect(jsonData.email).to.eql(\"postman_user@example.com\");",
+									"    pm.expect(jsonData.email).to.eql(pm.environment.get(\"uniqueUserEmail\"));",
 									"});"
 								],
 								"type": "text/javascript"
@@ -211,6 +222,17 @@
 					"name": "Create User - Admin",
 					"event": [
 						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const uniqueId = Date.now();",
+									"pm.environment.set(\"createdUserEmail\", \"created_\" + uniqueId + \"@example.com\");",
+									"pm.environment.set(\"createdUsername\", \"created_\" + uniqueId);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
 							"listen": "test",
 							"script": {
 								"exec": [
@@ -221,7 +243,8 @@
 									"pm.test(\"Created user returned and saved\", function () {",
 									"    var jsonData = pm.response.json();",
 									"    pm.expect(jsonData.id).to.be.a('number');",
-									"    pm.expect(jsonData.username).to.eql(\"created_api_user\");",
+									"    pm.expect(jsonData.username).to.eql(pm.environment.get(\"createdUsername\"));",
+									"    pm.expect(jsonData.email).to.eql(pm.environment.get(\"createdUserEmail\"));",
 									"    pm.environment.set(\"createdUserId\", jsonData.id);",
 									"});"
 								],
@@ -243,7 +266,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"created_api_user\",\n    \"email\": \"created_api_user@example.com\",\n    \"password\": \"SecurePass123!\",\n    \"role\": \"USER\"\n}"
+							"raw": "{\n    \"username\": \"{{createdUsername}}\",\n    \"email\": \"{{createdUserEmail}}\",\n    \"password\": \"SecurePass123!\",\n    \"role\": \"USER\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/users",
@@ -263,6 +286,17 @@
 					"name": "Update User",
 					"event": [
 						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const uniqueId = Date.now();",
+									"pm.environment.set(\"updatedUserEmail\", \"updated_\" + uniqueId + \"@example.com\");",
+									"pm.environment.set(\"updatedUsername\", \"updated_\" + uniqueId);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
 							"listen": "test",
 							"script": {
 								"exec": [
@@ -272,8 +306,8 @@
 									"",
 									"pm.test(\"User attributes updated correctly\", function () {",
 									"    var jsonData = pm.response.json();",
-									"    pm.expect(jsonData.username).to.eql(\"updated_api_user\");",
-									"    pm.expect(jsonData.email).to.eql(\"updated_email@example.com\");",
+									"    pm.expect(jsonData.username).to.eql(pm.environment.get(\"updatedUsername\"));",
+									"    pm.expect(jsonData.email).to.eql(pm.environment.get(\"updatedUserEmail\"));",
 									"});"
 								],
 								"type": "text/javascript"
@@ -294,7 +328,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"updated_api_user\",\n    \"email\": \"updated_email@example.com\",\n    \"role\": \"USER\"\n}"
+							"raw": "{\n    \"username\": \"{{updatedUsername}}\",\n    \"email\": \"{{updatedUserEmail}}\",\n    \"role\": \"USER\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/users/{{createdUserId}}",

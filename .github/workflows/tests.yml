@@ -27,11 +27,43 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Newman & Reporters
+        run: npm install -g newman newman-reporter-htmlextra
+
       - name: Compile Application
         run: mvn compile --no-transfer-progress
 
-      - name: Execute QA Automated Tests
+      - name: Execute QA Automated Tests (JUnit 5 + REST Assured)
         run: mvn test --no-transfer-progress
+
+      - name: Package Application for Newman Integration Testing
+        run: mvn package -DskipTests --no-transfer-progress
+
+      - name: Start Spring Boot Application in Background
+        run: |
+          java -jar target/qa-java-api-1.0.0.jar &
+          echo $! > app.pid
+          npx wait-on -t 30000 http://localhost:8080/api/users || sleep 8
+
+      - name: Execute Postman Suite via Newman CLI
+        run: |
+          newman run postman/User-Management-API.postman_collection.json \
+            -e postman/Local-Environment.postman_environment.json \
+            --reporters cli,htmlextra,junit \
+            --reporter-htmlextra-export newman/report.html \
+            --reporter-junit-export newman/results.xml
+
+      - name: Stop Background Spring Boot Application
+        if: always()
+        run: |
+          if [ -f app.pid ]; then
+            kill $(cat app.pid) || true
+          fi
 
       - name: Generate Allure Static HTML Report
         if: always()
@@ -64,4 +96,12 @@ jobs:
         with:
           name: allure-results
           path: target/allure-results/
+          retention-days: 14
+
+      - name: Upload Newman HTML Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-test-report
+          path: newman/
           retention-days: 14

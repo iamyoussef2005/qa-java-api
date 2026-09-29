@@ -6,6 +6,7 @@
 [![JUnit 5](https://img.shields.io/badge/JUnit-5-red.svg)](https://junit.org/junit5/)
 [![Allure Report](https://img.shields.io/badge/Allure%20Report-Live%20Dashboard-purple.svg)](https://iamyoussef2005.github.io/qa-java-api/)
 [![Tests](https://img.shields.io/badge/Tests-48%20Passed-success.svg)](https://iamyoussef2005.github.io/qa-java-api/)
+[![Newman](https://img.shields.io/badge/Newman-25%20Assertions%20Passed-ff6c37.svg)](https://www.postman.com/)
 [![CI/CD](https://img.shields.io/badge/GitHub%20Actions-Passing-brightgreen.svg)]()
 
 > A comprehensive QA Automation portfolio project showcasing practical API testing, automated regression suites, defect tracking, and modern test design patterns using **Java 21**, **Spring Boot 3**, **REST Assured**, **JUnit 5**, **AssertJ**, and **Postman**.
@@ -195,14 +196,17 @@ A fully functional Postman collection and environment are provided in the [`post
 - **Collection**: [`postman/User-Management-API.postman_collection.json`](file:///c:/Users/ASUS%20TUF/Documents/antigravity/calm-chandrasekhar/postman/User-Management-API.postman_collection.json)
 - **Environment**: [`postman/Local-Environment.postman_environment.json`](file:///c:/Users/ASUS%20TUF/Documents/antigravity/calm-chandrasekhar/postman/Local-Environment.postman_environment.json)
 
-### Importing and Running:
-1. Open Postman &rarr; Click **Import** &rarr; Select both JSON files from `postman/`.
-2. Select the **Local-Environment** in the top-right environment selector.
-3. Start the application backend:
-   ```bash
-   mvn spring-boot:run
-   ```
-4. Run the requests sequentially, or use **Postman Collection Runner** to execute the entire suite automatically.
+### Automated Headless Execution via Newman CLI
+In addition to manual exploratory testing in the Postman desktop client, the entire collection is executed headlessly via **Newman** both locally and automatically inside the **GitHub Actions CI/CD Pipeline**:
+
+```bash
+# Execute Postman collection via Newman CLI
+npx newman run postman/User-Management-API.postman_collection.json \
+  -e postman/Local-Environment.postman_environment.json
+```
+- **Total Requests**: 13 (Authentication, CRUD, Negative flows)
+- **Assertions Executed**: 25 (100% Passed)
+- **CI Artifact**: Full HTML execution report generated and uploaded on each pipeline run.
 
 ---
 
