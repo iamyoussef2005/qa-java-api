@@ -44,3 +44,5 @@ Thumbs.db
 *.docx
 cv_*
 generate*.py
+
+.allure/
