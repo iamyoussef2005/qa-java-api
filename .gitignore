@@ -38,3 +38,9 @@ allure-results/
 ### OS Generated ###
 .DS_Store
 Thumbs.db
+
+### Local CV & Build Artifacts ###
+*.pdf
+*.docx
+cv_*
+generate*.py
